@@ -1,0 +1,360 @@
+[STEP1]
+S0 = 0000
+D0 = 초기상태 ( Power OFF)
+Sub Step1()
+MUX "OFF"
+Switch "VB", 0
+SetV 0
+Switch "IG", 0
+Switch "OSW", 0
+Switch "CSW", 0
+Switch "SSW", 0
+Switch "TSW", 0
+RESULT = DCV
+RESULT = DCI
+End Sub
+
+[STEP2]
+S0 = 1001
+D0 = INH 출력 확인
+Sub Step2()
+MUX "OSW"
+Switch "VB", 1
+SetV 13.5
+DELAY 100
+DELAY 100
+RESULT = DCV
+End Sub
+
+[STEP3]
+S0 = 1002
+D0 = IG입력검사
+Sub Step3()
+Switch "VB", 1
+SetV 13.5
+Switch "IG", 1
+DELAY 100
+DELAY 300
+End Sub
+
+[STEP4]
+S0 = 1003
+D0 = normal session
+Sub Step4()
+MUX "0"
+Switch "VB", 1
+SetV 13.5
+Switch "IG", 1
+DELAY 100
+RESULT = DCV
+End Sub
+
+[STEP5]
+S0 = 1004
+D0 = Connection
+Sub Step5()
+Switch "VB", 1
+SetV 13.5
+Switch "IG", 1
+DELAY 100
+End Sub
+
+[STEP6]
+S0 = 1005
+D0 = ROM ID Check
+Sub Step6()
+Switch "VB", 1
+SetV 13.5
+Switch "IG", 1
+End Sub
+
+[STEP7]
+S0 = 1006
+D0 = Check Sum 확인
+Sub Step7()
+Switch "VB", 1
+SetV 13.5
+Switch "IG", 1
+End Sub
+
+[STEP8]
+S0 = 1007
+D0 = Ecu variation Number
+Sub Step8()
+Switch "VB", 1
+SetV 13.5
+Switch "IG", 1
+End Sub
+
+[STEP9]
+S0 = 1100
+D0 = function session
+Sub Step9()
+Switch "VB", 1
+SetV 16
+Switch "IG", 0
+DELAY 4000
+End Sub
+
+[STEP10]
+S0 = 2000
+D0 = Power:VB Check1
+Sub Step10()
+Switch "VB", 1
+SetV 16
+Switch "IG", 1
+DELAY 10
+End Sub
+
+[STEP11]
+S0 = 2001
+D0 = Power:5V Check1
+Sub Step11()
+MUX "OSW"
+Switch "VB", 1
+SetV 16
+Switch "IG", 1
+DELAY 200
+RESULT = DCV
+End Sub
+
+[STEP12]
+S0 = 2002
+D0 = Power:VB Check2
+Sub Step12()
+MUX "0"
+Switch "VB", 1
+SetV 9
+Switch "IG", 1
+RESULT = DCV
+End Sub
+
+[STEP13]
+S0 = 2003
+D0 = Power:5V Check2
+Sub Step13()
+MUX "OSW"
+Switch "VB", 1
+SetV 9
+Switch "IG", 1
+DELAY 200
+RESULT = DCV
+End Sub
+
+[STEP14]
+S0 = 2004
+D0 = Power:VB Check3
+Sub Step14()
+MUX "0"
+Switch "VB", 1
+SetV 13.5
+Switch "IG", 1
+RESULT = DCV
+End Sub
+
+[STEP15]
+S0 = 2005
+D0 = Power:5V Check3
+Sub Step15()
+MUX "OSW"
+Switch "VB", 1
+SetV 13.5
+Switch "IG", 1
+DELAY 100
+RESULT = DCV
+End Sub
+
+[STEP16]
+S0 = 2006
+D0 = 동작전류 확인
+Sub Step16()
+MUX "0"
+Switch "VB", 1
+SetV 13.5
+Switch "IG", 1
+RESULT = DCV
+RESULT = DCI
+End Sub
+
+[STEP17]
+S0 = 3000
+D0 = SSW Check1
+Sub Step17()
+Switch "VB", 1
+SetV 13.5
+Switch "IG", 1
+Switch "OSW", 1
+Switch "CSW", 1
+Switch "SSW", 1
+Switch "TSW", 1
+DELAY 300
+End Sub
+
+[STEP18]
+S0 = 3001
+D0 = SSW Check2
+Sub Step18()
+Switch "VB", 1
+SetV 13.5
+Switch "IG", 1
+Switch "OSW", 0
+Switch "CSW", 0
+Switch "SSW", 0
+Switch "TSW", 0
+DELAY 200
+End Sub
+
+[STEP19]
+S0 = 3002
+D0 = Motor Drive(p) Check1(p on)
+Sub Step19()
+Switch "VB", 1
+SetV 13.5
+Switch "IG", 1
+DELAY 100
+DELAY 100
+End Sub
+
+[STEP20]
+S0 = 3003
+D0 = Motor Drive(n) Check1(p on)
+Sub Step20()
+Switch "VB", 1
+SetV 13.5
+Switch "IG", 1
+End Sub
+
+[STEP21]
+S0 = 3004
+D0 = Current Sensor(p) Check1
+Sub Step21()
+Switch "VB", 1
+SetV 13.5
+Switch "IG", 1
+End Sub
+
+[STEP22]
+S0 = 3005
+D0 = Hall Sensor Check
+Sub Step22()
+Switch "VB", 1
+SetV 13.5
+Switch "IG", 1
+End Sub
+
+[STEP23]
+S0 = 3006
+D0 = Motor Drive(p) Check2(p off)
+Sub Step23()
+Switch "VB", 1
+SetV 13.5
+Switch "IG", 1
+DELAY 100
+DELAY 100
+End Sub
+
+[STEP24]
+S0 = 3007
+D0 = Motor Drive(n) Check1(p off)
+Sub Step24()
+Switch "VB", 1
+SetV 13.5
+Switch "IG", 1
+End Sub
+
+[STEP25]
+S0 = 3008
+D0 = Current Sensor(p) Check2
+Sub Step25()
+Switch "VB", 1
+SetV 13.5
+Switch "IG", 1
+End Sub
+
+[STEP26]
+S0 = 3009
+D0 = Motor Drive(p) Check1(n on)
+Sub Step26()
+Switch "VB", 1
+SetV 13.5
+Switch "IG", 1
+DELAY 100
+DELAY 100
+End Sub
+
+[STEP27]
+S0 = 3010
+D0 = Motor Drive(n) Check1(n on)
+Sub Step27()
+Switch "VB", 1
+SetV 13.5
+Switch "IG", 1
+End Sub
+
+[STEP28]
+S0 = 3011
+D0 = Current Sensor(n) Check1
+Sub Step28()
+Switch "VB", 1
+SetV 13.5
+Switch "IG", 1
+End Sub
+
+[STEP29]
+S0 = 3012
+D0 = Motor Drive(p) Check1(n off)
+Sub Step29()
+Switch "VB", 1
+SetV 13.5
+Switch "IG", 1
+SetFrq 50, "ON"
+End Sub
+
+[STEP30]
+S0 = 3013
+D0 = Motor Drive(n) Check1(n off)
+Sub Step30()
+Switch "VB", 1
+SetV 13.5
+Switch "IG", 1
+SetFrq 50, "ON"
+End Sub
+
+[STEP31]
+S0 = 3014
+D0 = Current Sensor(n) Check2
+Sub Step31()
+Switch "VB", 1
+SetV 13.5
+Switch "IG", 1
+SetFrq 50, "ON"
+End Sub
+
+[STEP32]
+S0 = 3015
+D0 = Vspeed Check1
+Sub Step32()
+Switch "VB", 1
+SetV 13.5
+Switch "IG", 1
+SetFrq 50, "ON"
+DELAY 100
+DELAY 100
+End Sub
+
+[STEP33]
+S0 = 3016
+D0 = Vspeed Check2
+Sub Step33()
+Switch "VB", 1
+SetV 13.5
+Switch "IG", 1
+Switch "OSW", 0
+Switch "CSW", 0
+Switch "SSW", 0
+Switch "TSW", 0
+SetFrq 125, "ON"
+DELAY 100
+DELAY 100
+End Sub
+

@@ -1,0 +1,50 @@
+
+[Model Info]
+Model name = Test
+Code Checksum = 97 60
+Data checksum = C3 E0
+CQC Print = 
+Manufacturer = ..
+ElectricSpec = ?
+CSV header = STEP, Function, Result, Min, Value, Max, Unit
+
+[Step4] ' 
+S0 = 4
+D0 = 0004,Load On ?,,2.66,,2.74,V
+sub Step4(ret) 
+
+	SendComm 2, "01SOUR:CURR 50", 100
+	SendComm 2, "01LOAD 1", 200
+	delay 100
+	ret = SendComm(2, "01LOAD?", 100)
+end sub
+
+[Step4] ' 
+S0 = 4
+D0 = 0004,01SOUR:CURR?,,,,0.015,A
+sub Step4(ret) 
+	SendComm 2, "01SOUR:CURR 0", 100
+
+ret = SendComm (2, "01SOUR:CURR?", 100)
+	'answer "RES"
+End sub 
+
+
+[Step4] ' 
+S0 = 4
+D0 = 0004,U상 정방향 100A 시 5V 전류 측정,,,,0.015,A
+sub Step4(ret) 
+	SendComm 2, "01LOAD 0", 200
+	ret = SendComm(2, "01LOAD?", 100)
+
+
+	'answer "RES"
+End sub 
+[Step6] ' 
+S0 = 6
+D0 = 0006,완료 후 초기화,,,,,
+sub Step6(ret)
+	ret = SendComm (3, "RESET ALL", 100)
+
+
+End sub

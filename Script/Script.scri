@@ -1,0 +1,458 @@
+[STEP1]
+S0 = 0000
+D0 = 초기상태 ( Power OFF)
+Sub Step1()
+ClearMem
+Switch "VB", 0
+SetV 0
+Switch "IG", 0
+Switch "OSW", 0
+Switch "CSW", 0
+Switch "SSW", 0
+Switch "TSW", 0
+Switch "KLin", 0
+'DELAY 100
+Answer ""
+End Sub
+
+[STEP2]
+S0 = 0000
+D0 = 암전류 측정
+Sub Step2()
+MUX "DARK"
+Switch "VB", 1
+SetV 13.5
+DELAY 200
+RESULT = DCI("DARK", 0)
+Answer "DCI_DARK"
+DELAY 1000
+MUX "OSW"
+DCV
+End Sub
+
+[STEP3]
+S0 = 1001
+D0 = INH 출력 확인
+Sub Step3()
+MUX "OSW"
+Switch "IG", 0
+'DELAY 9500
+'DELAY 9500
+Switch "KLin", 1
+DELAY 50
+Switch "KLin", 0
+DELAY 100
+DCV
+Answer "DCV"
+End Sub
+
+[STEP4]
+S0 = 1002
+D0 = IG입력검사
+Sub Step4()
+MUX "OSW"
+Switch "KLin", 0
+Switch "IG", 1
+DELAY 50
+DCV
+Answer "DCV"
+End Sub
+
+[STEP5]
+S0 = 1003
+D0 = normal session
+Sub Step5()
+Answer ""
+End Sub
+
+[STEP6]
+S0 = 1004
+D0 = Connection
+Sub Step6()
+'Result = K_Session
+'Result = K_Test
+Result = K_FncTest
+Result = K_RequestSeed
+Answer  "SEED"
+End Sub
+
+[STEP7]
+S0 = 1005
+D0 = ROM ID Check
+Sub Step7()
+Result = K_ReadEcu(1)
+DELAY 50
+Result = K_ReadEcu(2)
+Answer  "CODE_ID"
+End Sub
+
+[STEP8]
+S0 = 1006
+D0 = Check Sum 확인
+Sub Step8()
+DELAY 400
+Result = K_ReadEcu(3)
+DELAY 200
+Result = K_ReadEcu(4)
+Answer  "CODE_CHECKSUM"
+End Sub
+
+[STEP9]
+S0 = 1007
+D0 = Ecu variation Number
+Sub Step9()
+Result = K_ReadEcu(5)
+Answer  "VARIATION"
+End Sub
+
+[STEP10]
+S0 = 1100
+D0 = function session - Session 변경(이제 필요 없음)
+Sub Step10()
+Switch "VB", 1
+SetV 16
+Switch "IG", 0
+DELAY 1
+Answer ""
+End Sub
+
+[STEP11]
+S0 = 2000
+D0 = Power:VB Check1
+Sub Step11()
+Switch "IG", 1
+DELAY 10
+Result = K_StartFunction
+DELAY 100
+Result = K_ReadFunction
+Answer "VB_VOLT"
+End Sub
+
+[STEP12]
+S0 = 2001
+D0 = Power:5V Check1
+Sub Step12()
+MUX "OSW"
+DELAY 50
+DCV
+Answer "DCV"
+End Sub
+
+[STEP13]
+S0 = 2002
+D0 = Power:VB Check2
+Sub Step13()
+'Switch "VB", 1
+SetV 9
+DELAY 100
+'Switch "IG", 1
+'Result = K_StartFunction
+Result = K_ReadFunction
+Answer "VB_VOLT"
+'RETURN = Up_VB * 256 + Lo_VB
+End Sub
+
+[STEP14]
+S0 = 2003
+D0 = Power:5V Check2
+Sub Step14()
+MUX "OSW"
+'Switch "VB", 1
+SetV 9
+'Switch "IG", 1
+'Result = K_StartFunction
+'DELAY 5
+'Result = K_ReadFunction
+DELAY 100
+DCV
+Answer "DCV"
+End Sub
+
+[STEP15]
+S0 = 2004
+D0 = Power:VB Check3
+Sub Step15()
+'Switch "VB", 1
+SetV 13.5
+DELAY 100
+Result = K_ReadFunction
+Answer "VB_VOLT"
+End Sub
+
+[STEP16]
+S0 = 2005
+D0 = Power:5V Check3
+Sub Step16()
+MUX "OSW"
+DCV
+Answer "DCV"
+End Sub
+
+[STEP17]
+S0 = 2006
+D0 = 동작전류 확인
+Sub Step17()
+RESULT = DCI("VB", 0)
+Answer "DCI_VB"
+End Sub
+
+[STEP18]
+S0 = 3000
+D0 = SSW Check1
+Sub Step18()
+Switch "OSW", 1
+Switch "CSW", 0
+Switch "SSW", 0
+Switch "TSW", 0
+DELAY 200
+Result = K_ReadFunction
+DELAY 10
+Answer "SW_CODE"
+End Sub
+
+[STEP19]
+S0 = 3000
+D0 = SSW Check1
+Sub Step19()
+Switch "OSW", 0
+Switch "CSW", 1
+Switch "SSW", 0
+Switch "TSW", 0
+DELAY 200
+Result = K_ReadFunction
+DELAY 10
+Answer "SW_CODE"
+End Sub
+
+[STEP20]
+S0 = 3000
+D0 = SSW Check1
+Sub Step20()
+Switch "OSW", 0
+Switch "CSW", 0
+Switch "SSW", 1
+Switch "TSW", 0
+DELAY 200
+Result = K_ReadFunction
+DELAY 10
+Answer "SW_CODE"
+End Sub
+
+[STEP21]
+S0 = 3000
+D0 = SSW Check1
+Sub Step21()
+Switch "OSW", 0
+Switch "CSW", 0
+Switch "SSW", 0
+Switch "TSW", 1
+DELAY 200
+Result = K_ReadFunction
+DELAY 10
+Answer "SW_CODE"
+End Sub
+
+[STEP22]
+S0 = 3001
+D0 = SSW Check2
+Sub Step22()
+Switch "OSW", 0
+Switch "CSW", 0
+Switch "SSW", 0
+Switch "TSW", 0
+DELAY 200
+Result = K_ReadFunction
+Answer "SW_CODE"
+End Sub
+
+[STEP23]
+S0 = 3002
+D0 = Motor Drive(p) Check1(p on) : P check
+Sub Step23()
+DELAY 10
+RESULT = K_WriteFunction(1, "ON")
+DELAY 100
+RESULT = K_ReadFunction
+Answer "RY_ADC1"
+End Sub
+
+[STEP24]
+S0 = 3003
+D0 = Motor Drive(n) Check1(p on) : N check
+Sub Step24()
+Answer "RY_ADC2"
+End Sub
+
+[STEP25]
+S0 = 3004
+D0 = Current Sensor(p) Check1
+Sub Step25()
+Answer "CURR_ADC"
+End Sub
+
+[STEP26]
+S0 = 3005
+D0 = Hall Sensor Check
+Sub Step26()
+Answer "HALL_ADC1"
+End Sub
+
+[STEP27]
+S0 = 3005
+D0 = Hall Sensor Check
+Sub Step27()
+Answer "HALL_ADC2"
+End Sub
+
+[STEP28]
+S0 = 3006
+D0 = Motor Drive(p) Check2(p off) : P Check
+Sub Step28()
+RESULT = K_WriteFunction(1, "OFF")
+DELAY 100
+RESULT = K_ReadFunction
+Answer "RY_ADC1"
+DELAY 1
+End Sub
+
+[STEP29]
+S0 = 3007
+D0 = Motor Drive(n) Check1(p off) : N Check
+Sub Step29()
+Answer "RY_ADC2"
+End Sub
+
+[STEP30]
+S0 = 3008
+D0 = Current Sensor(p) Check2
+Sub Step30()
+Answer "CURR_ADC"
+End Sub
+
+[STEP31]
+S0 = 3009
+D0 = Motor Drive(p) Check1(n on) : P Check
+Sub Step31()
+RESULT = K_WriteFunction(2, "ON")
+DELAY 100
+RESULT = K_ReadFunction
+Answer "RY_ADC1"
+DELAY 1
+End Sub
+
+[STEP32]
+S0 = 3010
+D0 = Motor Drive(n) Check1(n on) : N Check
+Sub Step32()
+Answer "RY_ADC2"
+End Sub
+
+[STEP33]
+S0 = 3011
+D0 = Current Sensor(n) Check1
+Sub Step33()
+Answer "CURR_ADC"
+End Sub
+
+[STEP34]
+S0 = 3012
+D0 = Motor Drive(p) Check1(n off) : P Check
+Sub Step34()
+SetFrq 50, "ON"
+RESULT = K_WriteFunction(2, "OFF")
+DELAY 100
+RESULT = K_ReadFunction
+Answer "RY_ADC1"
+End Sub
+
+[STEP35]
+S0 = 3013
+D0 = Motor Drive(n) Check1(n off) : N Check
+Sub Step35()
+Answer "RY_ADC2"
+End Sub
+
+[STEP36]
+S0 = 3014
+D0 = Current Sensor(n) Check2
+Sub Step36()
+Answer "CURR_ADC"
+End Sub
+
+[STEP37]
+S0 = 3015
+D0 = Vspeed Check1
+Sub Step37()
+SetFrq 50, "ON"
+DELAY 100
+RESULT = K_ReadFunction
+Answer "SPEED_VAL"
+End Sub
+
+[STEP38]
+S0 = 3016
+D0 = Vspeed Check2
+Sub Step38()
+SetFrq 125, "ON"
+DELAY 100
+RESULT = K_ReadFunction
+Answer "SPEED_VAL"
+SetFrq 0, "OFF"
+End Sub
+
+[STEP39]
+S0 =4000 
+D0 = Warn Check 1
+Sub Step39()
+MUX "WARN"
+RESULT = K_WriteFunction(5, "ON")
+DELAY 100
+DCV
+Answer "DCV"
+End Sub
+
+[STEP37]
+S0 =4001 
+D0 = Warn Check 2
+Sub Step40()
+'MUX "WARN"
+RESULT = K_WriteFunction(5, "OFF")	' GSS Relay
+DELAY 100
+DCV
+Answer "DCV"
+End Sub
+
+[STEP41]
+S0 = 5000
+D0 = Power Latch On Check
+Sub Step41()
+MUX "OSW"
+Switch "IG", 0
+DELAY 50
+RESULT = K_ReadFunction
+DCV
+Answer "DCV"
+End Sub
+
+[STEP42]
+S0 = 5000
+D0 = Power Latch Off Check (오류)
+Sub Step42()
+MUX "OSW"
+RESULT = K_WriteFunction(3, "OFF")	' PWL Relay Off
+RESULT = K_WriteFunction(4, "OFF")	' NSLP Relay Off
+'RESULT = K_ReadFunction
+DELAY 100
+DCV
+Answer "DCV"
+ClearMem
+SetV 0
+Switch "VB", 0
+SetV 0
+Switch "IG", 0
+Switch "OSW", 0
+Switch "CSW", 0
+Switch "SSW", 0
+Switch "TSW", 0
+Switch "KLin", 0
+End Sub

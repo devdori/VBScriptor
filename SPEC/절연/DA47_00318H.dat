@@ -1,0 +1,83 @@
+' 유의사항 ====================================================================
+'
+' 담당자가 아닌 경우에 본 스크립트 사용 및 수정에 있어서 자재해주시기 바랍니다.
+'
+' 반제품에 대한 검사 스펙이며, step1 - step5 간 수정 및 삭제가 가능합니다.
+'
+' 코드 주석 처리 시에는 ' 기호를 사용하시면 됩니다.
+'
+' =============================================================================
+'
+' 주석 사용 예시
+'
+' ex) 내전압 검사를 제외하실 경우, 
+'
+' [step5]에서부터 End Sub까지 코드 앞부분을 ' 기호를 사용하시면 됩니다.
+'
+'[Step5] ' 5. 내전압 측정
+'S0 = 5
+'D0 = 0005,내전압 측정,,0.0,,2.5,㎃
+'Sub Step5()
+'	SerialCommOut "PUSH " & "11"
+'	TestTos5050A
+'End Sub
+' =============================================================================
+
+[Model Info]
+Model name = DA47-00318H
+Code Checksum = 97 60
+Data checksum = C3 E0
+ECO Number = KE
+Part Number = 9008010001#
+Customer Part Number = KH46-080001
+CSV header = STEP, Function, Result, Min, Value, Max, Unit
+
+[Step4] ' 4. 저저항 측정
+S0 = 4
+D0 = 0004,저저항 측정,,58.21,,66.98,Ω
+sub Step4(ret) 
+	SendComm "LOWRESIST"
+	delay 200
+'msgbox ""
+	ret = TestLowRes()
+	answer "RES"
+End sub 
+
+[Step4] ' 4. 절연 저항 측정
+S0 = 4
+D0 = 0004,절연저항 측정(500V),,3000,,,Ω
+'D0 = 0004,절연저항 측정(500V),,3000,,,㏁
+sub Step4(ret) 
+	ret = SendComm ("DISCHARGE")
+	delay 5000
+	ret = SendComm ("SWITCHOFF")
+	delay 1000
+	SendComm "ISORESIST"
+	delay 300
+'msgbox ""
+	ret = TestInsulation (500,0,500,0.1,10,"OFF","OFF","ON")
+	answer "RES"
+End sub
+
+[Step5] ' 5. 내전압 측정
+S0 = 5
+'D0 = 0005,내전압 측정,,0.0,,2.0,㎃
+D0 = 0005,내전압 측정,, ,,3,mA
+sub Step5(ret) 
+	SendComm "WITHSTAND"
+	delay 300
+	ret = TestWithstand (2, 2, 1)
+	answer "CURR"
+End sub
+
+[Step6] ' 
+S0 = 6
+D0 = 0006,방전 후 초기화,,,,,
+sub Step6(ret)
+	ret = SendComm ("DISCHARGE")
+	ret = SendComm ("SWITCHOFF")
+
+	'CloseTos5200
+	'CloseRm3544
+	'CloseSt5520
+End sub

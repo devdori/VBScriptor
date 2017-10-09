@@ -1,0 +1,513 @@
+Const Device = CB280
+
+Ramclear
+Set Debug On
+
+' ************************ Serial Communication ************************************
+Opencom 1,9600,3,50,50			'RS232 통신 세팅
+'Set Modbus 1,1,100				'모드버스로 셋팅 - 1 : RTU 							
+								'Mode, 3 : Address, 100 : 응답 Delay
+On Recv1 Gosub RCV_1			'PC 에서 점등 스타트 신호 받음
+Set Until 1, 10, &h0A			'통신에서 enter 키를 누르면 string Capture
+
+Dim bRcvCom1 As Byte
+Dim strRcvCom1	As String * 10
+strRcvCom1 = ""				'Clear set
+
+'strcmd		Var String *   5	'제어장치의 명령(주의:문자열 비교 시)
+'Command		Var String '*   10	' 제어장치의 명령
+
+
+' ************************ I2C Communication **************************************
+'Usepin 9, In, SDA0
+'Usepin 8, In, SCLK0
+
+Set I2c 9,8					'I2C 통신을 이용할 포트넘버 0:SDA / 1 : SCLK
+
+
+On Ladderint Gosub ISR_LADDER		'LADDER 에서 베이직으로 인터럽트 발생
+Set Ladder On						'LADDER 실행
+
+' CB290의 출력 전용 포트는 Set Outonly On 명령 전에는 High - Z 상태
+' 미리 출력 디폴트 상태를 설정 후 실행 : 엉뚱한 값이 출력되는 것을 방지
+Set Outonly On
+
+' 인/아웃 포트 설정
+Usepin 36, Out, O_POW_POS_W
+Usepin 39, Out, O_POW_NEG_W		' 
+Usepin 38, Out, O_POW_POS_U					
+Usepin 37, Out, O_POW_NEG_U	
+
+#define P_POW_POS_U	_P(38)
+#define P_POW_NEG_U	_P(37)
+#define P_POW_POS_W	_P(36)
+#define P_POW_NEG_W	_P(39)
+
+Usepin 32, Out, O_LAMP_RED
+Usepin 33, Out, O_LAMP_GREEN
+Usepin 34, Out, O_LAMP_ORANGE
+Usepin 35, Out, O_BUZZ
+#define P_LAMP_RED		_P(32)
+#define P_LAMP_GREEN		_P(33)
+#define P_LAMP_ORANGE	_P(34)
+#define P_BUZZ				_P(35)
+
+Usepin 10, Out, O_5V_RY_A
+Usepin 13, Out, O_5V_RY_B
+#define P_5V_RY_A			_P(10)
+#define P_5V_RY_B			_P(13)
+
+' ADC Channel 
+Input 24	' ADC 0
+Input 25	' ADC 1
+Input 26	' ADC 2
+Input 27	' ADC 3
+
+Usepin 40, In, I_FAIL_BOX
+Usepin 41, In, I_COVER_SEN		' 
+Usepin 42, In, I_EMGCY					
+Usepin 43, In, I_DUMMY	' 
+
+#define P_FAIL_BOX		_P(40)
+#define P_COVER_SEN		_P(41)
+#define P_EMGCY			_P(42)
+#define P_DUMMY			_P(43)
+
+' 해당 포트를 자동적으로 입력상태로 만든 뒤 핀 상태를 읽어옴.
+
+
+#define bM_TEST			_M(0)
+#define bM_INIT			_M(1)
+
+
+#define M_FAIL_RESET			_M(5)
+
+
+#define M_PC_PASS				_M(30)
+#define M_PC_FAIL				_M(31)
+#define M_PC_TEST_START		_M(32)
+#define M_PC_TEST_END		_M(33)
+#define M_PC_CNT_FULL		_M(34)
+#define M_PC_READY			_M(35)
+
+
+#define M_l_RED			_M(40)
+#define M_L_GREEN			_M(41)
+#define M_L_ORANGE		_M(42)
+#define M_BUZZ				_M(43)
+#define M_POW_POS_W		_M(44)
+#define M_POW_NEG_U		_M(45)
+#define M_POW_POS_U		_M(46)
+#define M_POW_NEG_w		_M(47)
+#define M_5V_RY_A			_M(48)
+#define M_5V_RY_B			_M(49)
+
+#define M_FAILBOX_SEN		_M(50) 
+#define M_COVER_SEN			_M(51)
+#define M_EMGCY				_M(52) 
+#define M_DUMMY4				_M(53) 
+' PLC에서 사용하기 위해 Alias 해줌
+Aliason
+	M5 = M_FAILBOX_RESET
+	M8 = M_INIT
+	M9 = M_BLINK
+	M10 = M_BLINK_COIL
+	
+	T0 = T_LOCK_DELAY
+	T1 = T_INIT_DELAY
+	T2 = T_BLINK_DELAY
+	T3 = T_BLINK_DELAY2
+	
+	T4 = T_LOCK2_DELAY
+	T5 = T_TEST_DELAY
+	T6 = T_TEST_DELAY2
+	
+	
+	M30 = PC_PASS				
+	M31 = PC_FAIL				
+	M32 = PC_TEST_START		
+	M33 = PC_TEST_END		
+	M34 = PC_CNT_FULL		
+	M35 = PC_READY			
+	
+ 	M40 = LAMP_RED
+ 	M41 = LAMP_GREEN
+ 	M42 = LAMP_ORANGE
+ 	M43 = BUZZER
+ 	M44 = POW_W_POS
+ 	M45 = POW_U_NEG
+ 	M46 = POW_U_POS
+ 	M47 = POW_W_NEG
+ 	M48 = 5V_RY_A
+ 	M49 = 5V_RY_B
+
+ 	M50 = FAILBOX_SEN
+ 	M51 = COVER_SEN
+ 	M52 = EMGCY
+ 	M53 = DUMMY4
+	 
+Aliasoff
+
+
+
+
+_D(0) = 10	' LOCK ON delay [0.1s] 1sec
+_D(1) = 10	' Initialize delay [0.1s] 1sec
+_D(2) = 5	' Blink On time [0.1s] 1sec
+_D(3) = 5	' Blink Off time [0.1s] 1sec
+_D(4) = 10	' LOCK OFF delay
+_D(5) = 10	' Test delay
+
+' ************************** Variable *****************************************
+Dim Curr As Single
+Dim Volt As Single
+Dim VoltCt As Integer
+
+Dim j As Byte
+
+' ************************** Main Routine *****************************************
+
+Delay 1000
+
+	M_5V_RY_A = 1
+	M_5V_RY_B = 1
+	
+	InitIna220
+	Curr = GetCurrent(1)
+	Debug Float Curr, Cr
+
+	Do
+		If bRcvCom1  = 1 Then
+			bRcvCom1 = 0
+			ParseCommand
+			
+'	Curr = GetCurrent(1)
+'	Debug Float Curr, Cr
+
+		End If	
+	Loop		
+	
+' ************************ rs232 comm 수신 interupt ****************
+RCV_1:							
+	Set Onglobal Off
+	bRcvCom1 = 1
+	strRcvCom1 = Getstr(1,10)
+
+	Set Onglobal On
+Return
+
+' **************************** LADDER interupt **********************
+ISR_LADDER :
+	If _D(10) = 1 Then			'다운 리미트 센서 동작
+		Debug "불량", Cr
+		Low 7
+
+'		Freqout 2, 3495
+'		Delay 300
+		Freqout 2, 2939
+'		Delay 300
+'		Freqout 2, 2202
+'		Delay 300
+		Pwmoff 2
+		High 7
+		'bPUSH_ON = 0
+	Elseif _D(10) = 2 Then
+		Debug "양품", Cr
+		Low 7
+		Freqout 2, 4403	
+		Delay 300
+		Freqout 2, 3495
+		Delay 300
+		Freqout 2, 2939
+		Delay 300
+		Freqout 2, 2202
+		Delay 600
+		Pwmoff 2
+		
+		High 7
+	'	Pwmoff 2
+		
+		'bPUSH_ON = 0 								
+	End If
+'	_D(10) = 0	
+	
+Return	
+
+
+
+Function I2cOut(addr As Byte, cmd As Byte, data1 As Byte, data2 As Byte) As Integer
+	
+    addr = &H80 + (addr << 1)    '좌시프트
+    I2cstart
+    If I2cwrite(addr) = 1 Then I2cOut = 1  '111001
+    If I2cwrite(cmd) = 1 Then I2cOut = 1  '111001
+    If I2cwrite(data1) = 1 Then I2cOut = 1  '111001
+    If I2cwrite(data2) = 1 Then I2cOut = 1  '111001
+    I2cstop
+End Function
+
+
+Sub InitIna220()
+Dim h As Long, k As Long
+'Dim PlateNum As Integer
+Dim rcv As Integer
+Dim retry As Integer
+
+    ' (0) : &H3FFF
+    ' (5) : &H332
+
+    For h = 0 To 0
+       Debug "Init INA220 Ch:" , Dec h , Cr
+	    rcv = ReadIna220Reg(h, 0)
+	    Debug "Reg 0 = ", Hex rcv, Cr
+	    rcv = ReadIna220Reg(h, 1)
+	    Debug "Reg 1 = ", Hex rcv, Cr
+  		 rcv = ReadIna220Reg(h, 2)
+	    Debug "Reg 2 = ", Hex rcv, Cr
+	    rcv = ReadIna220Reg(h, 3)
+	    Debug "Reg 3 = ", Hex rcv, Cr
+	    rcv = ReadIna220Reg(h, 4)
+	    Debug "Reg 4 = ", Hex rcv, Cr
+		 rcv = ReadIna220Reg(h, 5)
+	    Debug "Reg 5 = ", Hex rcv, Cr
+ 
+' *****************************************************************************                
+		If I2cOut(h, 0, &H3F, &HFF) = 1 Then
+			Debug "Reg0 Ack Error", Cr
+		Else
+      End If
+
+      rcv = ReadIna220Reg(h, 0)
+                
+      If (rcv = (&H3FFF)) Then
+        	Debug "Reg0 match-", Hex rcv, Cr
+      End If
+
+' ****************************************************************************
+
+		If I2cOut(h, 5, &H10, &H00) = 1 Then
+			Debug "Reg5 Ack Error", Cr
+		End If
+
+		rcv = ReadIna220Reg(h, 5)
+		If (rcv = &H1000) Then
+        	Debug "Reg5 match-", Hex rcv, Cr
+		Else
+        	Debug "Reg5 Unmatch-", Hex rcv, Cr
+		End If
+                 
+	Next 
+
+End Sub
+
+Function GetVolt( ch As Integer) As Single
+'    Dim SlaveAddr As Byte, GroupNo As Byte
+'    Dim I2CChannel As Byte
+    Dim RegAddr As Byte
+    Dim tmpbuf As Long
+    Dim tmpfloat As Single
+	
+    RegAddr = &H2
+    
+	tmpbuf = ReadIna220Reg(ch - 1, RegAddr)
+	tmpfloat = ((tmpbuf) * 0.002842) 
+    GetVolt = tmpfloat 
+	
+	Debug "GetVolt", Dec ch, " = ", Float( tmpfloat), Cr
+   ' 아무 것도 연결되지 않았을 때 &H02가 읽힘
+
+'    GetVolt = Rnd(10#)
+End Function
+
+
+Function GetCurrent(ch As Integer) As Single
+    Dim RegAddr As Byte
+    Dim tmpbuf As Long
+	Dim mV As Single
+	Dim R_SHUNT As Single
+	
+	R_SHUNT = 1
+	
+    RegAddr = &H4
+
+    tmpbuf = ReadIna220Reg(ch - 1, RegAddr)
+    
+    If (tmpbuf And &H8000&) = 0 Then
+    Else
+        tmpbuf = -(&H8000& - (tmpbuf And &H7FFF&))
+    End If
+    
+	Debug "Long ", Dec tmpbuf, Cr
+	
+	mV = tmpbuf * 0.01
+	
+'    GetCurrent = mV / R_SHUNT * 1.15   ' Cal Reg = &H0DDC
+    GetCurrent = mV / R_SHUNT          ' Cal Reg = &H1000
+    GetCurrent = mV / R_SHUNT + 0.15         ' Wowtech 적용
+    Debug "Current(Hex)=", Hex tmpbuf, Cr
+    
+    ' 아무 것도 연결되지 않았을 때 &H7FEE가 읽힘
+End Function
+
+
+
+Function ReadIna220Reg( addr As Byte,  RegNum As Byte) As Integer
+
+    Dim mWRLen As Long
+    Dim mRdLen As Long
+    
+    Dim buff As String
+    Dim wrbuff As String
+    
+    Dim tmp As Integer
+	
+	addr = &H80 + (addr << 1)	'좌시프트 
+	I2cstart
+	' Register pointer set
+	If I2cwrite(addr) = 1 Then  Error 4	'111001
+	If I2cwrite(RegNum) = 1 Then  Error 5	'111001
+	I2cstop
+
+	
+	I2cstart
+	If I2cwrite(addr + 1) = 1 Then  Error 4	'111001
+	tmp.Byte1 = I2cread(0)
+	tmp.Byte0 = I2creadna(0)
+	I2cstop
+    ReadIna220Reg = tmp
+        
+    
+End Function
+
+Sub Error(i As Integer)
+	Debug "ERROR : " , Dec(i) ,Cr
+End Sub
+
+
+
+Sub ParseCommand()
+	Set Onglobal Off
+	BUF_LEN	Var Byte
+
+	Dim Command		Var String *   9	' 제어장치의 명령
+	Dim strcmd		Var String *   5	'제어장치의 명령(주의:문자열 비교 시)
+	
+	Command		= Mid(strRcvCom1, 1, 9)
+	'PortNum = Val(Mid(strRcvCom1, 6, 2))
+	strCmd		= Left(Rtrim(Command),5)
+
+	If strCmd = "*IDN?" Then
+		Putstr 1, "COMFILE,CUBLOC,CB280,V2.00", Cr ' Chr(10)
+		Debug "COMFILE,CUBLOC,CB280,V2.00", Cr
+		Goto ERR_ROUTINE
+	Endif
+	
+	If strCmd = "*RST!" Then
+		Putstr 1, "COMFILE,CUBLOC,CB280,V2.00", Cr ' Chr(10)
+		Goto ERR_ROUTINE
+	Endif
+
+	
+	Select Case Command	
+		Debug command, Cr
+		Case "COVER 1 ?"
+			Putstr 1, Dp(M_COVER_SEN) , Cr
+			Debug "Cover:", Dp(M_COVER_SEN), Cr
+		Case "POW POS U"
+			M_POW_NEG_U	= 0 
+			M_POW_POS_W	= 0				
+			M_POW_NEG_w	= 0
+			Delay 100
+			M_POW_POS_U = 1
+		Case "POW NEG U"
+			M_POW_POS_U = 0
+			M_POW_POS_W	= 0				
+			M_POW_NEG_w	= 0
+			Delay 100
+			M_POW_NEG_U	= 1 
+		Case "POW POS W"
+			M_POW_POS_U = 0
+			M_POW_NEG_U	= 0 
+			M_POW_NEG_w	= 0
+			Delay 100
+			M_POW_POS_W	= 1				
+		Case "POW NEG W"
+			M_POW_POS_U = 0
+			M_POW_NEG_U	= 0 
+			M_POW_POS_W	= 0				
+			Delay 100
+			M_POW_NEG_w	= 1
+
+		Case "RESET ALL"
+			M_POW_POS_U = 0
+			M_POW_NEG_U	= 0 
+			M_POW_POS_W	= 0				
+			M_POW_NEG_w	= 0
+
+		Case "5V_RY_A 0"
+			M_5V_RY_A = 1
+
+		Case "5V_RY_A 1"
+			M_5V_RY_A = 0
+
+		Case "5V_RY_B 0"
+			M_5V_RY_B = 1
+
+		Case "5V_RY_B 1"
+			M_5V_RY_B = 0
+	
+		Case "GET VOLT1"
+			VoltCt = Tadin(0)
+			Putstr 1, Dp(VoltCt, 6, 1), Cr
+
+		Case "GET VOLT2"
+			VoltCt = Tadin(1)
+			Putstr 1, Dp(VoltCt, 6, 1), Cr
+		
+		
+		Case "GETCUR CT"
+			Curr = GetCurrent(1)
+			Putstr 1, Fp(Curr, 3, 3), Cr
+
+		Case "GETVOL CT"
+			Curr = GetVolt(1)
+			Putstr 1, Fp(Curr, 3, 3), Cr
+
+		Case "TEST FAIL"
+			 M_PC_FAIL = 1
+			 Delay 3000
+			 M_PC_FAIL = 0
+		Case "FAILBOX ?"
+			 Putstr 1, Dp(M_FAILBOX_SEN), Cr
+			Debug Dp(M_FAILBOX_SEN),Cr
+		Case "FAIL  CLR"
+			Debug "RST전", Dp(M_FAILBOX_SEN),Cr
+			 _M(5) = 1
+			 Delay 50
+			 _M(5) = 0
+			Debug "RST후", Dp(M_FAILBOX_SEN),Cr
+		
+		Case Else
+			'Putstr 1, Command, Cr
+			Debug Command, Cr
+			Goto ERR_ROUTINE
+								
+	End Select
+		
+	
+
+	
+ERR_ROUTINE :
+
+		
+'	Elseif CMD = "GET " Then
+'		Debug "GO",Cr
+'		Out 11,1	
+'	Elseif CMD = "RST " Then
+'		Debug "RST",Cr
+'		Out 35,1		
+
+
+	Set Onglobal On
+	
+End Sub
