@@ -77,13 +77,11 @@ Public Sub InitLabel()
     With frmMain
         
         .lblModel = ""
-        .lblManufacturer = ""
+        .lblCarType = ""
         .lblPartNo = ""
-        .lblElectricSpec = ""
-        .lblECONo = ""         'Now
+        .lblProductionDate = ""         'Now
+        .lblBarcode = ""
         
-        .lblCodeChecksum = ""
-        .lblDataChecksum = ""
         
         .lblResult = "READY"
         .lblResult.ForeColor = &HA0FFFF
@@ -173,22 +171,19 @@ On Error Resume Next                                    '실행 파일이 저장되어 있
     Temp_Data = Left$(s, InStr(s, Chr$(0)) - 1)
     MyFCT.sDat_Inspector = Temp_Data
 
-    ReturnValue = GetPrivateProfileString("USER_INFO", "COMPANY", "가나안 전자", s, 1024, File_Name)
-    Temp_Data = Left$(s, InStr(s, Chr$(0)) - 1)
-    MyFCT.sDat_Company = Temp_Data
 
 
     ReturnValue = GetPrivateProfileString("USER_INFO", "LAST_MODEL_NAME", "", s, 1024, File_Name)
     Temp_Data = Left$(s, InStr(s, Chr$(0)) - 1)
     MyFCT.sModelName = Temp_Data
 
-    ReturnValue = GetPrivateProfileString("USER_INFO", "Part Number", "0001", s, 1024, File_Name)
+    ReturnValue = GetPrivateProfileString("USER_INFO", "품번", "K4366-25070", s, 1024, File_Name)
     Temp_Data = Left$(s, InStr(s, Chr$(0)) - 1)
     MyFCT.sPartNo = Temp_Data
 
-'    ReturnValue = GetPrivateProfileString("USER_INFO", "CQC Print", "", s, 1024, File_Name)
-'    Temp_Data = Left$(s, InStr(s, Chr$(0)) - 1)
-'    MyFCT.sECONo = Temp_Data
+    ReturnValue = GetPrivateProfileString("USER_INFO", "차종", "OS EV EPCU", s, 1024, File_Name)
+    Temp_Data = Left$(s, InStr(s, Chr$(0)) - 1)
+    MyFCT.sECONo = Temp_Data
 
 
     

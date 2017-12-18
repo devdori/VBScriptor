@@ -16,17 +16,17 @@ Sub PreScript(frmMain)
 
     with frmmain
 	frmMain.caption = "Test Start"
-	frmMain.cmd_InModel.caption = "모델명"
-	frmMain.Cmd_clrPOPno.caption = "바코드"
-	frmMain.Cmd_Config(0).caption = "작업자"
-	frmMain.Cmd_Config(1).caption = "고객 번호"
-	frmMain.Cmd_Config(2).caption = "기타"
+	frmMain.cmd_InModel.caption = "품  명"
+	frmMain.Cmd_clrPOPno.caption = "차  종"
+	frmMain.Cmd_Config(0).caption = "품  번"
+	frmMain.Cmd_Config(1).caption = "생산일"
+	frmMain.Cmd_Config(2).caption = "바코드"
 
 	.cmdEditStep.visible = false
 	.cmdEditRemark.visible = false
 	.txtComm_Debug.visible = false
 
-	.lblMainTitle = "CT Sensor Electrical Characteristic Inspection Testbench"
+'	.lblMainTitle = ""
 	.FraECUData(4).Visible = False
 
 	.cmdtest.visible = false

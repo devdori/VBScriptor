@@ -69,10 +69,11 @@ ELOAD_FIND:
     Set frmMain = frmMainCTTB
 '    Load frmMain
     
+    LoadCfgFile (App.Path & "\" & App.ProductName & ".cfg")
+    
     frmMain.Show
     frmMain.WindowState = 2
     
-    LoadCfgFile (App.Path & "\" & App.ProductName & ".cfg")
     
     
     'Load frmAlert

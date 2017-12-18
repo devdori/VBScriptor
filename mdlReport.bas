@@ -178,7 +178,7 @@ Public Sub SaveResultMS(ByVal iRow As Long, ByRef lstitem As ListItem)
         ' File Header Write
         strTemp = "===================================================================================="
         Print #File_Num, strTemp
-        strTemp = "Barcode NO : " & "," & frmMain.lblManufacturer & "," & "Result : " & "," & MySPEC.sRESULT_TOTAL
+        strTemp = "Barcode NO : " & "," & frmMain.lblBarcode & "," & "Result : " & "," & MySPEC.sRESULT_TOTAL
         Print #File_Num, strTemp
         strTemp = "MODEL: " & "," & MyFCT.sModelName & "," & "INSPECTOR : " & "," & MyFCT.sDat_Inspector
         Print #File_Num, strTemp

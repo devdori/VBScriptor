@@ -2,14 +2,14 @@ VERSION 5.00
 Object = "{F9043C88-F6F2-101A-A3C9-08002B2F49FB}#1.2#0"; "COMDLG32.OCX"
 Object = "{648A5603-2C6E-101B-82B6-000000000014}#1.1#0"; "MSCOMM32.OCX"
 Object = "{248DD890-BB45-11CF-9ABC-0080C7E7B78D}#1.0#0"; "MSWINSCK.OCX"
-Object = "{BDC217C8-ED16-11CD-956C-0000C04E4C0A}#1.1#0"; "tabctl32.ocx"
-Object = "{831FDD16-0C5C-11D2-A9FC-0000F8754DA1}#2.2#0"; "mscomctl.ocx"
+Object = "{BDC217C8-ED16-11CD-956C-0000C04E4C0A}#1.1#0"; "Tabctl32.ocx"
+Object = "{831FDD16-0C5C-11D2-A9FC-0000F8754DA1}#2.2#0"; "MSCOMCTL.ocx"
 Begin VB.Form frmMainCTTB 
    Caption         =   "CT Senser Testbench"
    ClientHeight    =   12690
    ClientLeft      =   -75
    ClientTop       =   750
-   ClientWidth     =   19080
+   ClientWidth     =   21480
    BeginProperty Font 
       Name            =   "Arial"
       Size            =   9.75
@@ -24,10 +24,32 @@ Begin VB.Form frmMainCTTB
    LinkTopic       =   "Menu"
    MDIChild        =   -1  'True
    MinButton       =   0   'False
-   Picture         =   "frmMainCTTB.frx":030A
    ScaleHeight     =   12690
-   ScaleWidth      =   19080
+   ScaleWidth      =   21480
    WindowState     =   2  '최대화
+   Begin VB.PictureBox picTestSpec 
+      Height          =   3735
+      Left            =   19080
+      Picture         =   "frmMainCTTB.frx":030A
+      ScaleHeight     =   3675
+      ScaleWidth      =   2235
+      TabIndex        =   124
+      TabStop         =   0   'False
+      Top             =   3480
+      Width           =   2295
+   End
+   Begin MSComctlLib.ProgressBar prgMasterTestCheck 
+      Height          =   495
+      Left            =   16200
+      TabIndex        =   123
+      Top             =   9720
+      Width           =   2655
+      _ExtentX        =   4683
+      _ExtentY        =   873
+      _Version        =   393216
+      Appearance      =   1
+      Max             =   4
+   End
    Begin VB.CommandButton cmdMasterTest 
       Caption         =   "Master Test"
       BeginProperty Font 
@@ -48,19 +70,20 @@ Begin VB.Form frmMainCTTB
    Begin VB.CommandButton cmdCommand2 
       Caption         =   "바코드 프린트"
       Height          =   600
-      Left            =   19320
+      Left            =   21000
       TabIndex        =   96
-      Top             =   6960
+      Top             =   5520
+      Visible         =   0   'False
       Width           =   2895
    End
    Begin VB.CommandButton Cmd_ChangeCnt 
       BackColor       =   &H00C0C0C0&
       Caption         =   "핀 교체 주기"
       Height          =   495
-      Left            =   19320
+      Left            =   21000
       Style           =   1  '그래픽
       TabIndex        =   95
-      Top             =   3360
+      Top             =   2040
       Visible         =   0   'False
       Width           =   3015
    End
@@ -77,10 +100,10 @@ Begin VB.Form frmMainCTTB
          Strikethrough   =   0   'False
       EndProperty
       Height          =   600
-      Left            =   19320
+      Left            =   21000
       Style           =   1  '그래픽
       TabIndex        =   93
-      Top             =   7680
+      Top             =   6240
       Visible         =   0   'False
       Width           =   2895
    End
@@ -115,12 +138,13 @@ Begin VB.Form frmMainCTTB
          Strikethrough   =   0   'False
       EndProperty
       Height          =   360
-      Left            =   19320
+      Left            =   21000
       Locked          =   -1  'True
       MultiLine       =   -1  'True
       TabIndex        =   79
       TabStop         =   0   'False
-      Top             =   11160
+      Top             =   8880
+      Visible         =   0   'False
       Width           =   2835
    End
    Begin VB.TextBox ErrSource 
@@ -134,12 +158,13 @@ Begin VB.Form frmMainCTTB
          Strikethrough   =   0   'False
       EndProperty
       Height          =   360
-      Left            =   19320
+      Left            =   21000
       Locked          =   -1  'True
       MultiLine       =   -1  'True
       TabIndex        =   78
       TabStop         =   0   'False
-      Top             =   10440
+      Top             =   8280
+      Visible         =   0   'False
       Width           =   2835
    End
    Begin VB.TextBox ErrString 
@@ -153,34 +178,35 @@ Begin VB.Form frmMainCTTB
          Strikethrough   =   0   'False
       EndProperty
       Height          =   705
-      Left            =   19320
+      Left            =   21000
       Locked          =   -1  'True
       MultiLine       =   -1  'True
       ScrollBars      =   2  '수직
       TabIndex        =   77
       TabStop         =   0   'False
-      Top             =   12000
+      Top             =   9480
+      Visible         =   0   'False
       Width           =   2895
    End
    Begin VB.PictureBox iLed 
       BorderStyle     =   0  '없음
       Height          =   255
-      Left            =   16080
+      Left            =   20880
       ScaleHeight     =   255
       ScaleWidth      =   255
       TabIndex        =   62
-      Top             =   8760
+      Top             =   11880
       Visible         =   0   'False
       Width           =   255
    End
    Begin VB.PictureBox iLedLabelSend 
       BorderStyle     =   0  '없음
       Height          =   255
-      Left            =   16080
+      Left            =   20280
       ScaleHeight     =   255
       ScaleWidth      =   255
       TabIndex        =   64
-      Top             =   9120
+      Top             =   11880
       Visible         =   0   'False
       Width           =   255
    End
@@ -199,10 +225,10 @@ Begin VB.Form frmMainCTTB
       ForeColor       =   &H00404040&
       Height          =   1485
       Index           =   4
-      Left            =   18960
+      Left            =   21000
       TabIndex        =   66
       ToolTipText     =   "ECU Data 정보"
-      Top             =   10800
+      Top             =   10320
       Visible         =   0   'False
       Width           =   2835
       Begin VB.Label lblDataS 
@@ -391,32 +417,32 @@ Begin VB.Form frmMainCTTB
          Strikethrough   =   0   'False
       EndProperty
       Height          =   650
-      Left            =   19320
+      Left            =   21000
       Style           =   1  '그래픽
       TabIndex        =   61
       TabStop         =   0   'False
       ToolTipText     =   "STEP 편집 실행"
-      Top             =   6240
+      Top             =   4800
       Visible         =   0   'False
       Width           =   2835
    End
    Begin VB.TextBox txtPort 
       Alignment       =   1  '오른쪽 맞춤
       Height          =   375
-      Left            =   21120
+      Left            =   21000
       TabIndex        =   60
       Text            =   "2001"
-      Top             =   4920
+      Top             =   3600
       Visible         =   0   'False
       Width           =   975
    End
    Begin VB.TextBox txtHost 
       Alignment       =   1  '오른쪽 맞춤
       Height          =   375
-      Left            =   19320
+      Left            =   21000
       TabIndex        =   59
       Text            =   "10.224.189.243"
-      Top             =   4920
+      Top             =   3240
       Visible         =   0   'False
       Width           =   1695
    End
@@ -431,13 +457,13 @@ Begin VB.Form frmMainCTTB
          Strikethrough   =   0   'False
       EndProperty
       Height          =   1320
-      Left            =   19320
+      Left            =   21000
       Locked          =   -1  'True
       MultiLine       =   -1  'True
       ScrollBars      =   3  '양방향
       TabIndex        =   49
       TabStop         =   0   'False
-      Top             =   1560
+      Top             =   720
       Visible         =   0   'False
       Width           =   2835
    End
@@ -462,12 +488,12 @@ Begin VB.Form frmMainCTTB
          Strikethrough   =   0   'False
       EndProperty
       Height          =   650
-      Left            =   19320
+      Left            =   21000
       Style           =   1  '그래픽
       TabIndex        =   4
       TabStop         =   0   'False
       ToolTipText     =   "PIN 번호 설정"
-      Top             =   9240
+      Top             =   7440
       Visible         =   0   'False
       Width           =   2835
    End
@@ -484,12 +510,12 @@ Begin VB.Form frmMainCTTB
          Strikethrough   =   0   'False
       EndProperty
       Height          =   650
-      Left            =   19320
+      Left            =   21000
       Style           =   1  '그래픽
       TabIndex        =   3
       TabStop         =   0   'False
       ToolTipText     =   "STEP 편집 실행"
-      Top             =   8400
+      Top             =   6840
       Visible         =   0   'False
       Width           =   2835
    End
@@ -871,7 +897,7 @@ Begin VB.Form frmMainCTTB
       Height          =   1050
       Left            =   16080
       MaskColor       =   &H00000000&
-      Picture         =   "frmMainCTTB.frx":7B185
+      Picture         =   "frmMainCTTB.frx":20908
       Style           =   1  '그래픽
       TabIndex        =   2
       TabStop         =   0   'False
@@ -1147,7 +1173,7 @@ Begin VB.Form frmMainCTTB
             Italic          =   0   'False
             Strikethrough   =   0   'False
          EndProperty
-         MouseIcon       =   "frmMainCTTB.frx":7F547
+         MouseIcon       =   "frmMainCTTB.frx":24CCA
          NumItems        =   12
          BeginProperty ColumnHeader(1) {BDD1F052-858B-11D1-B16A-00C0F0283628} 
             Text            =   "STEP"
@@ -1219,7 +1245,7 @@ Begin VB.Form frmMainCTTB
             Text            =   "TIME"
             Object.Width           =   4410
          EndProperty
-         Picture         =   "frmMainCTTB.frx":7F861
+         Picture         =   "frmMainCTTB.frx":24FE4
       End
       Begin VB.Label LblNGList 
          Alignment       =   2  '가운데 맞춤
@@ -1254,7 +1280,7 @@ Begin VB.Form frmMainCTTB
       Width           =   5115
       Begin VB.CommandButton Cmd_clrPOPno 
          BackColor       =   &H00C0C0C0&
-         Caption         =   "공장"
+         Caption         =   "차종"
          Height          =   380
          Left            =   120
          Style           =   1  '그래픽
@@ -1277,7 +1303,7 @@ Begin VB.Form frmMainCTTB
       End
       Begin VB.CommandButton Cmd_Config 
          BackColor       =   &H00C0C0C0&
-         Caption         =   "정격"
+         Caption         =   "생산일"
          Height          =   380
          Index           =   1
          Left            =   120
@@ -1289,7 +1315,7 @@ Begin VB.Form frmMainCTTB
       End
       Begin VB.CommandButton Cmd_Config 
          BackColor       =   &H00C0C0C0&
-         Caption         =   "일련번호"
+         Caption         =   "품번"
          Height          =   380
          Index           =   0
          Left            =   120
@@ -1301,7 +1327,7 @@ Begin VB.Form frmMainCTTB
       End
       Begin VB.CommandButton Cmd_InMODEL 
          BackColor       =   &H00C0C0C0&
-         Caption         =   "모델명"
+         Caption         =   "품명"
          Height          =   380
          Left            =   120
          Style           =   1  '그래픽
@@ -1310,23 +1336,23 @@ Begin VB.Form frmMainCTTB
          Top             =   105
          Width           =   1530
       End
-      Begin VB.Label lblECONo 
+      Begin VB.Label lblCarType 
          Alignment       =   2  '가운데 맞춤
          BackColor       =   &H00FFFFFF&
          BorderStyle     =   1  '단일 고정
-         Caption         =   "바코드"
+         Caption         =   "차종"
          ForeColor       =   &H00404040&
          Height          =   375
          Left            =   1560
          TabIndex        =   15
-         Top             =   1785
+         Top             =   520
          Width           =   3450
       End
-      Begin VB.Label lblElectricSpec 
+      Begin VB.Label lblProductionDate 
          Alignment       =   2  '가운데 맞춤
          BackColor       =   &H00FFFFFF&
          BorderStyle     =   1  '단일 고정
-         Caption         =   "정격"
+         Caption         =   "생산일"
          ForeColor       =   &H00404040&
          Height          =   375
          Left            =   1560
@@ -1338,7 +1364,7 @@ Begin VB.Form frmMainCTTB
          Alignment       =   2  '가운데 맞춤
          BackColor       =   &H00FFFFFF&
          BorderStyle     =   1  '단일 고정
-         Caption         =   "모델명"
+         Caption         =   "품명"
          DragMode        =   1  '자동
          ForeColor       =   &H00404040&
          Height          =   375
@@ -1347,23 +1373,23 @@ Begin VB.Form frmMainCTTB
          Top             =   105
          Width           =   3450
       End
-      Begin VB.Label lblManufacturer 
+      Begin VB.Label lblBarcode 
          Alignment       =   2  '가운데 맞춤
          BackColor       =   &H00FFFFFF&
          BorderStyle     =   1  '단일 고정
-         Caption         =   "공장명"
+         Caption         =   "바코드"
          ForeColor       =   &H00404040&
          Height          =   375
          Left            =   1560
          TabIndex        =   12
-         Top             =   525
+         Top             =   1800
          Width           =   3450
       End
       Begin VB.Label lblPartNo 
          Alignment       =   2  '가운데 맞춤
          BackColor       =   &H00FFFFFF&
          BorderStyle     =   1  '단일 고정
-         Caption         =   "일련번호"
+         Caption         =   "품번"
          ForeColor       =   &H00404040&
          Height          =   375
          Left            =   1560
@@ -1388,7 +1414,7 @@ Begin VB.Form frmMainCTTB
       Left            =   0
       TabIndex        =   6
       Top             =   0
-      Width           =   19335
+      Width           =   21495
       Begin MSCommLib.MSComm MSCommCB 
          Left            =   5400
          Top             =   120
@@ -1499,7 +1525,7 @@ Begin VB.Form frmMainCTTB
          EndProperty
          Height          =   600
          Left            =   18340
-         Picture         =   "frmMainCTTB.frx":7FD04
+         Picture         =   "frmMainCTTB.frx":25487
          Style           =   1  '그래픽
          TabIndex        =   5
          TabStop         =   0   'False
@@ -1535,7 +1561,7 @@ Begin VB.Form frmMainCTTB
          Alignment       =   2  '가운데 맞춤
          BackColor       =   &H80000012&
          BackStyle       =   0  '투명
-         Caption         =   "CT Senser Test Bench"
+         Caption         =   "바코드 리딩 : "
          BeginProperty Font 
             Name            =   "Arial"
             Size            =   14.25
@@ -1565,8 +1591,8 @@ Begin VB.Form frmMainCTTB
       Left            =   0
       TabIndex        =   0
       Top             =   12360
-      Width           =   19080
-      _ExtentX        =   33655
+      Width           =   21480
+      _ExtentX        =   37888
       _ExtentY        =   582
       _Version        =   393216
       BeginProperty Panels {8E3867A5-8586-11D1-B16A-00C0F0283628} 
@@ -1578,7 +1604,7 @@ Begin VB.Form frmMainCTTB
          BeginProperty Panel2 {8E3867AB-8586-11D1-B16A-00C0F0283628} 
             Alignment       =   1
             AutoSize        =   1
-            Object.Width           =   10134
+            Object.Width           =   14367
             MinWidth        =   5292
          EndProperty
          BeginProperty Panel3 {8E3867AB-8586-11D1-B16A-00C0F0283628} 
@@ -1586,14 +1612,14 @@ Begin VB.Form frmMainCTTB
             Alignment       =   1
             Object.Width           =   3528
             MinWidth        =   3528
-            TextSave        =   "2017-10-10"
+            TextSave        =   "2017-12-19"
          EndProperty
          BeginProperty Panel4 {8E3867AB-8586-11D1-B16A-00C0F0283628} 
             Style           =   5
             Alignment       =   1
             Object.Width           =   3528
             MinWidth        =   3528
-            TextSave        =   "오전 5:14"
+            TextSave        =   "오전 4:05"
          EndProperty
       EndProperty
       BeginProperty Font {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
@@ -1619,7 +1645,7 @@ Begin VB.Form frmMainCTTB
       EndProperty
       Height          =   1050
       Left            =   16080
-      Picture         =   "frmMainCTTB.frx":80F36
+      Picture         =   "frmMainCTTB.frx":266B9
       Style           =   1  '그래픽
       TabIndex        =   1
       ToolTipText     =   "정지"
@@ -1640,14 +1666,14 @@ Begin VB.Form frmMainCTTB
       TabHeight       =   520
       ShowFocusRect   =   0   'False
       TabCaption(0)   =   "Step List"
-      TabPicture(0)   =   "frmMainCTTB.frx":89878
+      TabPicture(0)   =   "frmMainCTTB.frx":2EFFB
       Tab(0).ControlEnabled=   0   'False
       Tab(0).Control(0)=   "lblSTEPLIST"
       Tab(0).Control(1)=   "StepList"
       Tab(0).Control(2)=   "PBar1"
       Tab(0).ControlCount=   3
       TabCaption(1)   =   "Test List"
-      TabPicture(1)   =   "frmMainCTTB.frx":89894
+      TabPicture(1)   =   "frmMainCTTB.frx":2F017
       Tab(1).ControlEnabled=   -1  'True
       Tab(1).Control(0)=   "Label1"
       Tab(1).Control(0).Enabled=   0   'False
@@ -1689,14 +1715,14 @@ Begin VB.Form frmMainCTTB
       Tab(1).Control(18).Enabled=   0   'False
       Tab(1).ControlCount=   19
       TabCaption(2)   =   "설정"
-      TabPicture(2)   =   "frmMainCTTB.frx":898B0
+      TabPicture(2)   =   "frmMainCTTB.frx":2F033
       Tab(2).ControlEnabled=   0   'False
       Tab(2).ControlCount=   0
       Begin VB.PictureBox Picture1 
          AutoSize        =   -1  'True
          Height          =   4200
          Left            =   120
-         Picture         =   "frmMainCTTB.frx":898CC
+         Picture         =   "frmMainCTTB.frx":2F04F
          ScaleHeight     =   4140
          ScaleWidth      =   10425
          TabIndex        =   115
@@ -2289,10 +2315,10 @@ Begin VB.Form frmMainCTTB
          Width           =   15585
       End
    End
-   Begin VB.Label lblLabel6 
+   Begin VB.Label lblLabel8 
       AutoSize        =   -1  'True
       BackStyle       =   0  '투명
-      Caption         =   "Jig 제한 횟수"
+      Caption         =   "검사 스펙"
       BeginProperty Font 
          Name            =   "Arial"
          Size            =   12
@@ -2302,11 +2328,79 @@ Begin VB.Form frmMainCTTB
          Italic          =   0   'False
          Strikethrough   =   0   'False
       EndProperty
+      ForeColor       =   &H00FF0000&
       Height          =   285
+      Left            =   19200
+      TabIndex        =   125
+      Top             =   3120
+      Width           =   1080
+   End
+   Begin VB.Label lblMasterCheck 
+      AutoSize        =   -1  'True
+      BackStyle       =   0  '투명
+      Caption         =   "마스터 체크 상태"
+      BeginProperty Font 
+         Name            =   "Arial"
+         Size            =   11.25
+         Charset         =   0
+         Weight          =   700
+         Underline       =   0   'False
+         Italic          =   0   'False
+         Strikethrough   =   0   'False
+      EndProperty
+      ForeColor       =   &H000000FF&
+      Height          =   270
+      Left            =   16560
+      TabIndex        =   122
+      Top             =   9360
+      Width           =   1800
+   End
+   Begin VB.Label lblJigCount 
+      BackStyle       =   0  '투명
+      BorderStyle     =   1  '단일 고정
+      Height          =   420
+      Left            =   17760
+      TabIndex        =   121
+      Top             =   10800
+      Width           =   1065
+   End
+   Begin VB.Label lblLabel7 
+      AutoSize        =   -1  'True
+      BackStyle       =   0  '투명
+      Caption         =   "총 누적 수량"
+      BeginProperty Font 
+         Name            =   "Arial"
+         Size            =   11.25
+         Charset         =   0
+         Weight          =   700
+         Underline       =   0   'False
+         Italic          =   0   'False
+         Strikethrough   =   0   'False
+      EndProperty
+      Height          =   270
+      Left            =   16200
+      TabIndex        =   120
+      Top             =   10920
+      Width           =   1320
+   End
+   Begin VB.Label lblLabel6 
+      AutoSize        =   -1  'True
+      BackStyle       =   0  '투명
+      Caption         =   "Jig 설정 횟수"
+      BeginProperty Font 
+         Name            =   "Arial"
+         Size            =   11.25
+         Charset         =   0
+         Weight          =   700
+         Underline       =   0   'False
+         Italic          =   0   'False
+         Strikethrough   =   0   'False
+      EndProperty
+      Height          =   270
       Left            =   16200
       TabIndex        =   119
-      Top             =   11880
-      Width           =   1485
+      Top             =   11640
+      Width           =   1395
    End
    Begin VB.Label lblJigTotCnt 
       Alignment       =   2  '가운데 맞춤
@@ -2322,11 +2416,11 @@ Begin VB.Form frmMainCTTB
          Italic          =   0   'False
          Strikethrough   =   0   'False
       EndProperty
-      Height          =   360
+      Height          =   480
       Left            =   17760
       TabIndex        =   118
-      Top             =   11880
-      Width           =   1140
+      Top             =   11520
+      Width           =   1065
    End
    Begin VB.Label lblMasterTestCount 
       Alignment       =   2  '가운데 맞춤
@@ -2371,9 +2465,9 @@ Begin VB.Form frmMainCTTB
       EndProperty
       ForeColor       =   &H0080C0FF&
       Height          =   615
-      Left            =   19320
+      Left            =   21000
       TabIndex        =   94
-      Top             =   3960
+      Top             =   2520
       Visible         =   0   'False
       Width           =   3015
    End
@@ -2383,9 +2477,10 @@ Begin VB.Form frmMainCTTB
       Caption         =   "CAN Error Source"
       Height          =   255
       Index           =   1
-      Left            =   19320
+      Left            =   21000
       TabIndex        =   84
-      Top             =   10200
+      Top             =   8040
+      Visible         =   0   'False
       Width           =   2895
    End
    Begin VB.Label lblCANErrorCode 
@@ -2393,9 +2488,10 @@ Begin VB.Form frmMainCTTB
       BackStyle       =   0  '투명
       Caption         =   "CANErrorCode"
       Height          =   255
-      Left            =   19320
+      Left            =   21000
       TabIndex        =   83
-      Top             =   10920
+      Top             =   8640
+      Visible         =   0   'False
       Width           =   2895
    End
    Begin VB.Label lblCANError 
@@ -2404,9 +2500,10 @@ Begin VB.Form frmMainCTTB
       Caption         =   "CAN Error Description"
       Height          =   255
       Index           =   0
-      Left            =   19320
+      Left            =   21000
       TabIndex        =   82
-      Top             =   11760
+      Top             =   9240
+      Visible         =   0   'False
       Width           =   2895
    End
    Begin VB.Label lblCANDebug 
@@ -2423,9 +2520,9 @@ Begin VB.Form frmMainCTTB
       BackStyle       =   0  '투명
       Caption         =   "Send Label"
       Height          =   375
-      Left            =   19320
+      Left            =   21000
       TabIndex        =   65
-      Top             =   6000
+      Top             =   4440
       Visible         =   0   'False
       Width           =   1335
    End
@@ -2433,9 +2530,9 @@ Begin VB.Form frmMainCTTB
       BackStyle       =   0  '투명
       Caption         =   "Connected"
       Height          =   375
-      Left            =   19320
+      Left            =   21000
       TabIndex        =   63
-      Top             =   5640
+      Top             =   4080
       Visible         =   0   'False
       Width           =   1095
    End
@@ -2632,7 +2729,7 @@ End Sub
 Private Sub Cmd_clrPOPno_Click()
     'POP 초기화
     If vbYes = MsgBox("POP NO를 초기화합니까?", vbYesNo + vbQuestion + vbDefaultButton2, "POP NO 초기화") Then
-        lblManufacturer = ""
+        lblBarcode = ""
         MyFCT.sDat_PopNo = ""
     End If
 End Sub
@@ -2847,42 +2944,6 @@ End Sub
 
 Private Sub iSegTotalCnt_Change()
     iSegTotalCnt.Caption = Format$(MyFCT.nTOTAL_COUNT, "000000")
-End Sub
-
-Private Sub lblMODEL_MouseDown(Button As Integer, Shift As Integer, X As Single, Y As Single)
-
-'    If lblMODEL.Tag = "" Then
-'
-'        lblMODEL.Tag = "DRAG"
-'        Debug.Print "tag : DRAG"
-'
-'    End If
-    
-End Sub
-
-Private Sub lblMODEL_MouseMove(Button As Integer, Shift As Integer, X As Single, Y As Single)
-'    If lblMODEL.Tag = "DRAG" Then
-'        Debug.Print "DRAG"
-'        lblMODEL.Drag vbBeginDrag
-'        lblMODEL.Tag = "DRAGING"
-'    End If
-End Sub
-
-Private Sub lblMODEL_MouseUp(Button As Integer, Shift As Integer, X As Single, Y As Single)
-    
-'    If lblMODEL.Tag = "DRAGING" Then
-        
-'        lblMODEL.Top = Y
-'        lblMODEL.Left = X
-        
-'        lblMODEL.Tag = ""
-'        lblMODEL.Drag vbEndDrag
-'        Debug.Print "Drag End"
-        
-'    End If
-    
-    Debug.Print "Mouse Up"
-
 End Sub
 
 Private Sub mnu_self_meas_Click()
@@ -3573,14 +3634,16 @@ On Error Resume Next
     With Me
     
         'Public Sub Main() >> Public Sub LoadCfgFile() 을 통해 MyFCT.xxx들이 메모리 상으로 적재됨
-        .lblModel = MyFCT.sModelName
-        .lblManufacturer = MyFCT.Manufacturer
-        '.lblElectricSpec = MyFCT.ElectricSpec
-        .lblECONo = MyFCT.sECONo     'Now
-         '.lblPartNo = MyFCT.sPartNo
+        
+         Dim myDate As Date
 
-        .lblCodeChecksum = MyFCT.CodeChecksum
-        .lblDataChecksum = MyFCT.DataChecksum
+        .lblModel = MyFCT.sModelName
+        .lblCarType = MyFCT.sECONo     'Now
+        .lblPartNo = MyFCT.sPartNo
+        .lblProductionDate = Year(Date) & "/" & Month(Date) & "/" & Day(Date) & "/"
+        
+        .lblBarcode = ""
+
         
         .lblResult = "READY"
         .lblResult.ForeColor = &HA0FFFF
@@ -3791,23 +3854,19 @@ Private Sub CmdTest_Click()
     
     Me.InitFormMain
     Me.DisplayFontRunning
+    
     If IsMasterTest = True Then
         lblMasterTestCount = lblMasterTestCount - 1
+        prgMasterTestCheck.value = 4 - lblMasterTestCount
+        
+        If prgMasterTestCheck.value = 4 Then
+            lblMasterCheck.ForeColor = vbBlue
+        
         Me.ClearDataOnList StepList
     Else
         Me.ClearDataOnList StepList1
     End If
     
-'    frmMain.iLedLabelSend.Active = False
-'    frmMain.iLedLabelSend.BeginUpdate
-'    frmMain.iLedLabelSend.EndUpdate
-    
-    '시작
-    MyFCT.bPROGRAM_STOP = False
-    If MyFCT.bUseHexFile = True And lblElectricSpec = "" Then
-        MsgBox "Hex File 경로를 설정해 주십시오."
-        Exit Sub
-    End If
 
 Dim strBarcode As String
 
@@ -3825,11 +3884,11 @@ Dim strBarcode As String
             GoTo END_1
         End If
         
-        lblMainTitle.Caption = strBarcode
-        lblManufacturer.Caption = strBarcode
+        lblMainTitle.Caption = "바코드 리딩 : " & strBarcode
+        lblBarcode.Caption = strBarcode
         
     Else
-        lblManufacturer = "-"
+        lblBarcode = "-"
         MyFCT.sDat_PopNo = "사용안함" & CStr(MyFCT.nTOTAL_COUNT)
     End If
     
@@ -3857,9 +3916,6 @@ Total_Meas:
     End If
     
 
-    MyFCT.sPartNo = CStr(CInt(MyFCT.sPartNo) + 1)
-    'Me.lblPartNo.Caption = MyFCT.sPartNo
-    
     StepList.Refresh ' 이 때!!!! STEP, Function, Result, Min, Value, Max, Unit 글자색이 바뀜
     PBar1.value = 100
     
@@ -3867,15 +3923,13 @@ Total_Meas:
     
     RefreshResult (sTestResult)
     
-    Call SaveResultCpk(lblManufacturer, MyFCT.nStepNum, StepList)
+    Call SaveResultCpk(lblBarcode, MyFCT.nStepNum, StepList)
 
     SavePop (sTestResult)
     
     scCommon.Run "PostTest", frmMain
     
     
-'    MyFCT.sDat_PopNo = ""
-'    frmMain.lblManufacturer = MyFCT.sDat_PopNo
     b_IsScanned = False
     
     If MyFCT.bUseOption = False Then
@@ -3938,53 +3992,6 @@ exp:
     Exit Sub
     
     
-End Sub
-
-
-Private Sub MSComm4_OnComm()
-Dim Buffer As String
-    
-''    Buffer = MSComm4.Input
- '   MSComm4.InputLen = 0
-'    b_IsScanned = True
-        
-'    sndPlaySound App.Path & "\BARPASS.WAV", &H1
-    
-'    MyFCT.sDat_PopNo = Buffer
- '   lblManufacturer = MyFCT.sDat_PopNo
-    
-'    CmdTest.SetFocus
-    
-    '    Timer2.Enabled = True
-'Dim RxData As Byte
-'Dim RxString As String
-'
-'If MSComm1.CommEvent <> comEvReceive Then Exit Sub
-'
-'RxString = ""
-'
-'RxLoop:
-'    If MSComm1.InBufferCount = 0 Then GoTo EndRcv
-'    RxData = AscB(MSComm1.Input)
-'
-''    If RcvEnb.value = Unchecked Then GoTo RxLoop
-'
-'    RxString = RxString & Hex(RxData \ 16) & Hex(RxData And 15) & " "
-'
-'    RxCount = RxCount + 1
-'
-'    If RxCount >= 1 Then
-'        Debug.Print RxString & "   " & ASCiiData ' & vbCr & vbLf  '
-'        ASCiiData = ""
-'        RxString = ""
-'        RxCount = 0
-'    End If
-'
-'GoTo RxLoop
-'
-'EndRcv:
-''  RxText.Text = RxText.Text & RxString
-
 End Sub
 
 Private Sub OptAuto_Click(Index As Integer)

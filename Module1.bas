@@ -72,9 +72,6 @@ On Error GoTo hErr
     Temp_Data = Left$(s, InStr(s, Chr$(0)) - 1)
     MyFCT.DataChecksum = Temp_Data
     
-    ReturnValue = GetPrivateProfileString("Model Info", "CQC Print", "", s, 1024, ModelFileName)
-    Temp_Data = Left$(s, InStr(s, Chr$(0)) - 1)
-    MyFCT.sECONo = Temp_Data
 
     ReturnValue = GetPrivateProfileString("Model Info", "ElectricSpec", "0001", s, 1024, File_Name)
     Temp_Data = Left$(s, InStr(s, Chr$(0)) - 1)
@@ -370,7 +367,7 @@ Public Sub SavePop(ByVal sOK As String)
         sKind = "NOR"
     #End If
     
-    sPopData = "," & Left(MyFCT.sDat_PopNo, 11) & "," & sOK & "," & sKind & "," & Date & "," & Right(Format(time, "hh:mm:ss"), 8) & ",1,1"
+    sPopData = "," & Left(MyFCT.sDat_PopNo, 11) & "," & sOK & "," & sKind & "," & Date & "," & Right(Format(Time, "hh:mm:ss"), 8) & ",1,1"
     Call WritePrivateProfileString("POP DATA", "Last Result", sPopData, App.Path & "\Pop\LastResult.ini")
     Debug.Print "파일저장 : " & App.Path & "\Pop\LastResult.ini"
     

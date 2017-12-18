@@ -1,0 +1,24 @@
+[History]
+1=#P0#=mb	#P1#=CmdTest_Click	#P2#=CTSensorTest/frmMainCTTB/CmdTest_Click	#P3#=	#P4#=	#P5#=MembEventProcPrivate	#P6#=20171219040524	#P7#=0	#P8#=26	.
+2=#P0#=mb	#P1#=CoverCheck	#P2#=CTSensorTest/clsScript/CoverCheck	#P3#=	#P4#=	#P5#=MembMethodPrivate	#P6#=20171219035856	#P7#=0	#P8#=29	.
+3=#P0#=mb	#P1#=cmdMasterTest_Click	#P2#=CTSensorTest/frmMainCTTB/cmdMasterTest_Click	#P3#=	#P4#=	#P5#=MembEventProcPrivate	#P6#=20171219035816	#P7#=0	#P8#=4	.
+4=#P0#=mb	#P1#=MainCttb	#P2#=CTSensorTest/mdlMainCTTB/MainCttb	#P3#=	#P4#=	#P5#=MembMethodPrivate	#P6#=20171219035717	#P7#=0	#P8#=12	.
+5=#P0#=mb	#P1#=DisplayUpdate	#P2#=CTSensorTest/frmMainCTTB/DisplayUpdate	#P3#=	#P4#=	#P5#=MembMethodPrivate	#P6#=20171219033947	#P7#=0	#P8#=9	.
+6=#P0#=mb	#P1#=MakeSpecFile	#P2#=CTSensorTest/Module1/MakeSpecFile	#P3#=	#P4#=	#P5#=MembMethodPrivate	#P6#=20171219032500	#P7#=0	#P8#=38	.
+7=#P0#=mb	#P1#=LoadCfgFile	#P2#=CTSensorTest/MdlMain/LoadCfgFile	#P3#=	#P4#=	#P5#=MembMethodPrivate	#P6#=20171219031253	#P7#=0	#P8#=61	.
+8=#P0#=mb	#P1#=txtECU_Data_LostFocus	#P2#=CTSensorTest/frmConfig/txtECU_Data_LostFocus	#P3#=	#P4#=	#P5#=MembEventProcPrivate	#P6#=20171219030220	#P7#=0	#P8#=-3	.
+9=#P0#=mb	#P1#=MakeTempSpec	#P2#=CTSensorTest/mdlADO/MakeTempSpec	#P3#=	#P4#=	#P5#=MembMethodPrivate	#P6#=20171219030056	#P7#=0	#P8#=30	.
+10=#P0#=mb	#P1#=mnu_self_meas_Click	#P2#=CTSensorTest/frmMainCTTB/mnu_self_meas_Click	#P3#=	#P4#=	#P5#=MembEventProcPrivate	#P6#=20171219025724	#P7#=0	#P8#=-1	.
+11=#P0#=mb	#P1#=SaveResultMS	#P2#=CTSensorTest/mdlReport/SaveResultMS	#P3#=	#P4#=	#P5#=MembMethodPrivate	#P6#=20171219025426	#P7#=0	#P8#=32	.
+12=#P0#=mb	#P1#=Form_KeyDown	#P2#=CTSensorTest/frmMainCTTB/Form_KeyDown	#P3#=	#P4#=	#P5#=MembEventProcPrivate	#P6#=20171219025252	#P7#=0	#P8#=57	.
+13=#P0#=mb	#P1#=InitLabel	#P2#=CTSensorTest/MdlMain/InitLabel	#P3#=	#P4#=	#P5#=MembMethodPrivate	#P6#=20171219025213	#P7#=0	#P8#=7	.
+14=#P0#=mb	#P1#=Cmd_clrPOPno_Click	#P2#=CTSensorTest/frmMainCTTB/Cmd_clrPOPno_Click	#P3#=	#P4#=	#P5#=MembEventProcPrivate	#P6#=20171219023855	#P7#=0	#P8#=3	.
+15=#P0#=mb	#P1#=OptAuto_Click	#P2#=CTSensorTest/frmMainCTTB/OptAuto_Click	#P3#=	#P4#=	#P5#=MembEventProcPrivate	#P6#=20171219023827	#P7#=0	#P8#=-1	.
+16=#P0#=mb	#P1#=SaveCfgFile	#P2#=CTSensorTest/MdlMain/SaveCfgFile	#P3#=	#P4#=	#P5#=MembMethodPrivate	#P6#=20171219023447	#P7#=0	#P8#=35	.
+17=#P0#=mb	#P1#=cmdSetTest_Click	#P2#=CTSensorTest/frmTestPopup/cmdSetTest_Click	#P3#=	#P4#=	#P5#=MembEventProcPrivate	#P6#=20171219022657	#P7#=0	#P8#=6	.
+18=#P0#=mb	#P1#=cmdCoreTest_Click	#P2#=CTSensorTest/frmTestPopup/cmdCoreTest_Click	#P3#=	#P4#=	#P5#=MembEventProcPrivate	#P6#=20171219022647	#P7#=0	#P8#=6	.
+19=#P0#=mb	#P1#=mnuFileOpen_Click	#P2#=CTSensorTest/frmMainCTTB/mnuFileOpen_Click	#P3#=	#P4#=	#P5#=MembEventProcPrivate	#P6#=20171219022539	#P7#=0	#P8#=53	.
+20=#P0#=mb	#P1#=Form_Load	#P2#=CTSensorTest/frmMainCTTB/Form_Load	#P3#=	#P4#=	#P5#=MembEventProcPrivate	#P6#=20171219022514	#P7#=0	#P8#=32	.
+21=#P0#=mb	#P1#=cmdTestAlias_Click	#P2#=CTSensorTest/frmMainCTTB/cmdTestAlias_Click	#P3#=	#P4#=	#P5#=MembEventProcPrivate	#P6#=20171219022453	#P7#=0	#P8#=11	.
+22=#P0#=mb	#P1#=LoadSpecADO	#P2#=CTSensorTest/mdlADO/LoadSpecADO	#P3#=	#P4#=	#P5#=MembMethodPrivate	#P6#=20171219022241	#P7#=0	#P8#=73	.
+23=#P0#=mb	#P1#=LoadSpec	#P2#=CTSensorTest/clsCommonScript/LoadSpec	#P3#=	#P4#=	#P5#=MembMethodPrivate	#P6#=20171219022028	#P7#=0	#P8#=2	.
